@@ -1,0 +1,38 @@
+
+Domain
+
+BasicTime
+    updated
+    created
+
+Language:
+    Name :string
+    SvgName :string
+    Description: string
+    Type: {OBJECT_ORIENTED, FUNCTIONAL}
+    Categories: List<Category>
+
+Category:
+    Name :string
+    SvgName :string
+    basicTime: BasicTime
+    language: Language
+    Description :string
+    Type: {FRONTEND, BACKEND}
+    Topic :List<Topic>
+
+Topic
+    Name
+    BasicTime
+    Description
+    Rating: number
+    Difficulty: number
+    category :Category
+    Paragraph :List<Paragraph>
+
+Paragraph
+    Title
+    Description
+    Code: String{<Pre>}
+    parent: Paragraph
+    children: List<Paragraph>
