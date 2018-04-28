@@ -3,6 +3,7 @@ package com.siwoo.blog.repository;
 import com.siwoo.blog.domain.Language;
 import com.siwoo.blog.domain.LanguageType;
 import com.siwoo.blog.domain.support.LanguageSpecification;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static com.siwoo.blog.repository.support.RepositorySupporter.*;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Slf4j
 @Repository
 public class LanguageRepositoryImpl implements CustomLanguageRepository {
 
@@ -36,7 +38,6 @@ public class LanguageRepositoryImpl implements CustomLanguageRepository {
 
         Predicate criteria = cb.disjunction();
         String value = specification.getValue();
-
         for(Type type: specification.getTypes()) {
             switch (type) {
                 case LANGUAGE_TYPE:
@@ -51,11 +52,11 @@ public class LanguageRepositoryImpl implements CustomLanguageRepository {
                     break;
                 case DESCRIPTION:
                     criteria = cb.or(criteria,
-                            cb.like(root.get(COLUMN_DESCRIPTION), concatWildCard(value,'%')));
+                            cb.like(cb.upper(root.get(COLUMN_DESCRIPTION)), concatWildCard(value.toUpperCase(),'%')));
                     break;
                 case NAME:
                     criteria = cb.or(criteria,
-                            cb.like(root.get(COLUMN_NAME), concatWildCard(value,'%')));
+                            cb.like(cb.upper(root.get(COLUMN_NAME)), concatWildCard(value.toUpperCase(),'%')));
                     break;
             }
         }

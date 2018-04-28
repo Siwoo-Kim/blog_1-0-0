@@ -19,7 +19,7 @@ public class Profiler {
             result = joinPoint.proceed();
         }finally {
             long end = System.currentTimeMillis();
-            log.warn("Profiling - {}, \nTime to execute : {}",joinPoint.getSignature(), (end - start));
+//            log.warn("Profiling - {}, \nTime to execute : {}",joinPoint.getSignature(), (end - start));
             return result;
         }
     }

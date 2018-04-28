@@ -2,8 +2,10 @@ package com.siwoo.blog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -13,6 +15,12 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public ViewResolver viewResolver() {
         return new InternalResourceViewResolver("/static/","");
+    }
+
+    @Override
+    protected void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index.html");
+        registry.addRedirectViewController("/home","/").setStatusCode(HttpStatus.FOUND);
     }
 
     @Override

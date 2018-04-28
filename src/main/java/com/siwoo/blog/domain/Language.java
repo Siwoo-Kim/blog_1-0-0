@@ -1,5 +1,6 @@
 package com.siwoo.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class Language {
     @Column(name = "language_type")
     private LanguageType type;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "language")
     private List<Category> categories = new ArrayList<>();
 }

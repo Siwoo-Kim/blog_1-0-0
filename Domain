@@ -28,6 +28,7 @@ Topic
     Rating: number
     Difficulty: number
     category :Category
+    nextTopic : Topic
     Paragraph :List<Paragraph>
 
 Paragraph

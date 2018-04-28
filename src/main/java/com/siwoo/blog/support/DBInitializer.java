@@ -3,7 +3,9 @@ package com.siwoo.blog.support;
 import com.siwoo.blog.domain.User;
 import com.siwoo.blog.repository.CategoryRepository;
 import com.siwoo.blog.repository.LanguageRepository;
+import com.siwoo.blog.repository.TopicRepository;
 import com.siwoo.blog.repository.UserRepository;
+import com.siwoo.blog.service.TopicService;
 import com.siwoo.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +23,10 @@ public class DBInitializer implements CommandLineRunner {
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
+    TopicRepository topicRepository;
+    @Autowired
+    TopicService topicService;
+    @Autowired
     UserService userService;
     @Autowired
     UserRepository userRepository;
@@ -34,9 +40,15 @@ public class DBInitializer implements CommandLineRunner {
 
     @Transactional
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         languageRepository.saveAll(FixtureFactory.languages());
         categoryRepository.saveAll(FixtureFactory.categories(languageRepository));
+        FixtureFactory
+                .angularTopics(categoryRepository)
+                .forEach(topic -> topicService.save(topic));
+        FixtureFactory
+                .springTopics(categoryRepository)
+                .forEach(topic -> topicService.save(topic));
 
         User user = new User();
         user.setEmail(email);
