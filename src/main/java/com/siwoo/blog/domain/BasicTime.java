@@ -2,6 +2,8 @@ package com.siwoo.blog.domain;
 
 import lombok.*;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Embeddable
@@ -9,7 +11,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = {"created","updated"})
 public class BasicTime {
 
+    @NotNull
     private LocalDateTime created;
+
     private LocalDateTime updated;
 
     protected BasicTime(){}

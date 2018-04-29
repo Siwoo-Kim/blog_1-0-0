@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -17,6 +18,21 @@ public class TestTopicRepository {
 
     @Autowired TopicRepository topicRepository;
 
+    @Test
+    public void testFindByCategoryName() {
+        topicRepository
+                .findByCategoryName("angular")
+                .forEach(topic -> {
+                    assertTrue("ANGULAR".equals(topic.getCategory().getName().toUpperCase()));
+                });
+        assertNotNull( topicRepository.findByCategoryName("angular") );
+        assertTrue( !topicRepository.findByCategoryName("angular").isEmpty() );
+        topicRepository
+                .findByCategoryName("spring boot")
+                .forEach(topic -> {
+                    assertTrue("SPRING BOOT".equals(topic.getCategory().getName().toUpperCase()));
+                });
+    }
     @Test
     public void findMaxDisplayIndex() {
 //        Integer index = topicRepository.findLastIndex();

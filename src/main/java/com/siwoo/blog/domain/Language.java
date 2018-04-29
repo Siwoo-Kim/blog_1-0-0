@@ -18,7 +18,7 @@ public class Language {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String svgName;
+    private String imgName;
     @Column(length = 1500)
     private String description;
     @Enumerated(EnumType.STRING)

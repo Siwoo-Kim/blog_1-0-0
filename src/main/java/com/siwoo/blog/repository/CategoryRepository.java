@@ -20,4 +20,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("select new com.siwoo.blog.domain.support.ShortCategory(c.id, c.name) from Category c")
     List<ShortCategory> findShortAll();
 
+    @Query("select new com.siwoo.blog.domain.support.ShortCategory(c.id, c.name) from Category c where upper(c.name) = upper(:name)")
+    ShortCategory findShortByName(@Param("name") String name);
+
 }

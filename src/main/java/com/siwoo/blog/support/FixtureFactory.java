@@ -16,14 +16,14 @@ public class FixtureFactory {
         List languages = new ArrayList();
         Language java = new Language();
         java.setName("JAVA");
-        java.setSvgName("java-svg");
+        java.setImgName("java-img");
         java.setDescription("Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented,and specifically designed to have as few implementation dependencies as possible. It is intended to let application developers \"write once, run anywhere\" meaning that compiled Java code can run on all platforms that support Java without the need for recompilation. Java applications are typically compiled to bytecode that can run on any Java virtual machine (JVM) regardless of computer architecture. As of 2016, Java is one of the most popular programming languages in use, particularly for client-server web applications, with a reported 9 million developers.Java was originally developed by James Gosling at Sun Microsystems (which has since been acquired by Oracle Corporation) and released in 1995 as a core component of Sun Microsystems' Java platform. The language derives much of its syntax from C and C++, but it has fewer low-level facilities than either of them.");
         java.setType(LanguageType.OBJECT_ORIENTED);
         languages.add(java);
 
         Language typescript = new Language();
         typescript.setName("TYPESCRIPT");
-        typescript.setSvgName("ts-svg");
+        typescript.setImgName("ts-img");
         typescript.setDescription("TypeScript is an open-source programming language developed and maintained by Microsoft. It is a strict syntactical superset of JavaScript, and adds optional static typing to the language.\n" + "\n" + "TypeScript is designed for development of large applications and transpile to JavaScript.  As TypeScript is a superset of JavaScript, existing JavaScript programs are also valid TypeScript programs. TypeScript may be used to develop JavaScript applications for both client-side and server-side (Node.js) execution.");
         typescript.setType(LanguageType.FUNCTIONAL);
         languages.add(typescript);
@@ -38,7 +38,7 @@ public class FixtureFactory {
         spring_boot.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,26,12,10,10),null));
         spring_boot.setDescription("The Spring Framework is an application framework and inversion of control container for the Java platform. The framework's core features can be used by any Java application, but there are extensions for building web applications on top of the Java EE (Enterprise Edition) platform.");
         spring_boot.setLanguage(languageRepository.findByName("java"));
-        spring_boot.setSvgName("springboot-svg");
+        spring_boot.setImgName("springboot-img");
         spring_boot.setType(CategoryType.BACKEND);
         categories.add(spring_boot);
 
@@ -47,7 +47,7 @@ public class FixtureFactory {
         angular.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,26,12,10,10),null));
         angular.setDescription("Angular (commonly referred to as \"Angular 5\" or \"Angular 2\") is a TypeScript-based open-source front-end web application platform led by the Angular Team at Google and by a community of individuals and corporations. Angular is a complete rewrite from the same team that built AngularJS.");
         angular.setLanguage(languageRepository.findByName("typescript"));
-        angular.setSvgName("angular-svg");
+        angular.setImgName("angular-img");
         angular.setType(CategoryType.FRONTEND);
         categories.add(angular);
 
@@ -56,7 +56,7 @@ public class FixtureFactory {
         hibernate.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,27,10,32,25),null));
         hibernate.setDescription("Hibernate ORM (Hibernate in short) is an object-relational mapping tool for the Java programming language. ");
         hibernate.setLanguage(languageRepository.findByName("java"));
-        hibernate.setSvgName("hibernate-svg");
+        hibernate.setImgName("hibernate-img");
         hibernate.setType(CategoryType.BACKEND);
         categories.add(hibernate);
 
@@ -104,6 +104,13 @@ public class FixtureFactory {
         topic.setShortDescription("Routing은 앵귤러의 URL을 통한 딥링킹을 지원한다.");
         topics.add(topic);
 
+        topic = new Topic();
+        topic.setName("Form");
+        topic.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,29,10,5,30), null));
+        topic.setDescription("폼은 웹 어플리케이션에서 가장 중요하고 복잡한 요소이다. 폼은 복잡하기 그지없다. 서버의 데이터를 수정하거나 입력하며, 변경된 내용이 다른 곳에 반영되어야 하며, 입력 내용을 검증해야 되고, 오류를 분명하게 나타내야 하며, 종속된 필드가 있으면 로직이 복잡해진다. 이 복잡한 구조를 앵귤러를 통하여 어떻게 데이터를 어떻게 처리하는지 알아보자.\n" + "\n");
+        topic.setDifficulty(4);
+        topic.setShortDescription("Angular은 Form을 관리하는 FormControl, Validator, Observable을 지원한다.\n");
+        topics.add(topic);
         topics.forEach(_topic ->  _topic.setCategory(categoryRepository.findByName("angular")));
         return topics;
     }
