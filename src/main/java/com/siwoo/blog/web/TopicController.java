@@ -28,7 +28,6 @@ public class TopicController {
 
     @GetMapping(params = "by=categoryName")
     List<Topic> byCategoryName(@RequestParam("value") String value) {
-        log.warn(value + "");
         return this.topicRepository.findByCategoryName(value);
     }
 

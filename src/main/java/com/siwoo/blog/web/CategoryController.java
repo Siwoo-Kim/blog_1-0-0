@@ -5,8 +5,10 @@ import com.siwoo.blog.domain.support.CategoryValidationGroup.*;
 import com.siwoo.blog.domain.support.ShortCategory;
 import com.siwoo.blog.repository.CategoryRepository;
 import com.siwoo.blog.service.CategoryService;
+import com.siwoo.blog.web.exception.CategoryNotFoundException;
 import com.siwoo.blog.web.support.ErrorMessage;
 import com.siwoo.blog.web.support.WebDataBindingException;
+import io.netty.util.internal.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -14,6 +16,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -51,7 +54,11 @@ public class CategoryController {
 
     @GetMapping(params = "by=name")
     public Category byName(@RequestParam String value) {
-        return categoryRepository.findByName(value);
+        Category category = categoryRepository.findByName(value);
+        if(category == null) {
+            throw new CategoryNotFoundException("Category[name:" + value +"] not found","name");
+        }
+        return category;
     }
 
 
@@ -64,7 +71,6 @@ public class CategoryController {
     ShortCategory allShortsByCategoryName(@RequestParam String value) {
         return categoryService.shortAllByCategoryNameFetched(value);
     }
-
 
     @Autowired
     MessageSource messageSource;
