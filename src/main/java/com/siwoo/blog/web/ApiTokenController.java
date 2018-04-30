@@ -1,9 +1,6 @@
 package com.siwoo.blog.web;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.siwoo.blog.web.support.ApiToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +21,6 @@ public class ApiTokenController {
 
     @Value("${youtube.api.token}")
     private String youtubeToken;
-
-    @Getter @Setter @ToString
-    @AllArgsConstructor
-    public static class ApiToken {
-        private URL url;
-        private String token;
-    }
 
     private static Map<String,ApiToken> tokens = new ConcurrentHashMap();
 

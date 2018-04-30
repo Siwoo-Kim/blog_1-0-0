@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
@@ -28,7 +27,6 @@ public class GitHubServiceImpl implements GitHubService {
 
     @Override
     public GitHub getRepos(String userName) {
-        if(!StringUtils.hasText(userName)) return null;
         if( !cached(userName) ) {
             GitHub gitHub = restOperations.getForObject(createUserUri(userName), GitHub.class);
             cache.put(userName, gitHub);

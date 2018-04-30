@@ -38,7 +38,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/*.js").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.js").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.svg").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.png").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.woff2").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.css").addResourceLocations("classpath:/static/");
     }
 
     @Bean

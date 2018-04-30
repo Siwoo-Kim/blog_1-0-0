@@ -27,6 +27,8 @@ public class ImageResolverImpl implements ImageResolver {
                 .stream()
                 .distinct()
                 .forEach(names -> imageNames.add(names));
+        imageNames.add("youtube-img");
+        imageNames.add("github-img");
         return imageNames;
     }
 
