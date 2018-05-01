@@ -17,6 +17,7 @@ public class BookController {
 
     @Autowired BookService bookService;
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public Book byId(@PathVariable("id") Long id) {
         System.out.println(id);

@@ -14,4 +14,5 @@ public class ApiToken {
         this.url = url;
         this.token = token;
     }
+
 }

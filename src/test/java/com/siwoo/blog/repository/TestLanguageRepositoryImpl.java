@@ -27,7 +27,7 @@ public class TestLanguageRepositoryImpl {
     public void searchAny() {
         Language language = new Language();
         String targetName = "tester";
-        String targetDescription = "this is just test";
+        String targetDescription = "this is just objectMapperBuilder";
         LanguageType targetType = LanguageType.FUNCTIONAL;
         language.setName(targetName);
         languageRepository.save(language);
@@ -40,7 +40,7 @@ public class TestLanguageRepositoryImpl {
 
         language.setDescription(targetDescription);
         languageRepository.save(language);
-        System.out.println(RepositorySupporter.concatWildCard("test",'%'));
+        System.out.println(RepositorySupporter.concatWildCard("objectMapperBuilder",'%'));
         languageSpecfication = new LanguageSpecification(targetDescription,
                 new HashSet<>(Arrays.asList(Type.DESCRIPTION)));
         languages = languageRepository.searchAny(languageSpecfication);

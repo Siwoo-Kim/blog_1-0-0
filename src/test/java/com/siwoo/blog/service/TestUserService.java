@@ -30,12 +30,12 @@ public class TestUserService {
     @Before
     public void setup() {
         fixture1 = new User();
-        fixture1.setEmail("test@email.com");
+        fixture1.setEmail("objectMapperBuilder@email.com");
         fixture1.setPassword("1234");
     }
     @Test
     public void register() {
-        fixture1.setEmail("test@email.com");
+        fixture1.setEmail("objectMapperBuilder@email.com");
         String prevPassword = fixture1.getPassword();
         fixture1 = userService.register(fixture1);
         assertTrue(passwordEncoder.matches(prevPassword, fixture1.getPassword()));

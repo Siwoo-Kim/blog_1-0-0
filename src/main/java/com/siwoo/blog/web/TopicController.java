@@ -5,10 +5,8 @@ import com.siwoo.blog.repository.TopicRepository;
 import com.siwoo.blog.service.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Slf4j
@@ -29,6 +27,11 @@ public class TopicController {
     @GetMapping(params = "by=categoryName")
     List<Topic> byCategoryName(@RequestParam("value") String value) {
         return this.topicRepository.findByCategoryName(value);
+    }
+
+    @GetMapping("/{categoryName}/{topicName}")
+    Topic byCategoryName(@PathVariable String categoryName, @PathVariable String topicName) {
+        return this.topicRepository.findByNameAndCategoryName(topicName,categoryName);
     }
 
 }

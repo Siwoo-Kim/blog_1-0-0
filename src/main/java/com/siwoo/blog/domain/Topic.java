@@ -1,12 +1,12 @@
 package com.siwoo.blog.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter @Setter @ToString
+@Data @ToString(exclude = "paragraphs")
 @Entity @Table(name = "tbl_topic")
 public class Topic {
 
@@ -27,6 +27,12 @@ public class Topic {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "topic",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private List<Paragraph> paragraphs = new ArrayList<>();
+
     private Integer rating = 0;
 
     private Integer difficulty = 0;
@@ -40,4 +46,12 @@ public class Topic {
         topic.setIndex(prevIndex);
     }
 
+    public void addParagraph(Paragraph paragraph) {
+        if(!paragraphs.contains(paragraph)) {
+            this.paragraphs.add(paragraph);
+        }
+        if(paragraph.getTopic() != this) {
+            paragraph.setTopic(this);
+        }
+    }
 }

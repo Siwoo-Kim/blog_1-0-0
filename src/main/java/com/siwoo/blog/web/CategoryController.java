@@ -22,10 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -37,6 +34,11 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    @GetMapping("/test")
+    public void getHeader(@RequestHeader Map headers) {
+        System.out.println(headers);
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -44,6 +46,7 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> categories() {
+        System.out.println("Handled");
         return categoryRepository.findAll();
     }
 
