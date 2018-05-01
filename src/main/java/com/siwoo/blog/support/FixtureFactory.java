@@ -5,6 +5,7 @@ import com.siwoo.blog.repository.CategoryRepository;
 import com.siwoo.blog.repository.LanguageRepository;
 import com.siwoo.blog.repository.TopicRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import java.util.List;
 
 @Slf4j
 public class FixtureFactory {
+    private static final String CATEGORY_ANGULAR = "Angular";
+    private static final String CATEGORY_SPRINGBOOT = "Spring Boot";
+    private static final String CATEGORY_HIBERNATE = "Hibernate";
 
     public static List<Language> languages() {
         List languages = new ArrayList();
@@ -35,7 +39,7 @@ public class FixtureFactory {
     public static List<Category> categories(LanguageRepository languageRepository) {
         List categories = new ArrayList();
         Category spring_boot = new Category();
-        spring_boot.setName("Spring Boot");
+        spring_boot.setName(CATEGORY_SPRINGBOOT);
         spring_boot.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,26,12,10,10),null));
         spring_boot.setDescription("The Spring Framework is an application framework and inversion of control container for the Java platform. The framework's core features can be used by any Java application, but there are extensions for building web applications on top of the Java EE (Enterprise Edition) platform.");
         spring_boot.setLanguage(languageRepository.findByName("java"));
@@ -44,7 +48,7 @@ public class FixtureFactory {
         categories.add(spring_boot);
 
         Category angular = new Category();
-        angular.setName("Angular");
+        angular.setName(CATEGORY_ANGULAR);
         angular.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,26,12,10,10),null));
         angular.setDescription("Angular (commonly referred to as \"Angular 5\" or \"Angular 2\") is a TypeScript-based open-source front-end web application platform led by the Angular Team at Google and by a community of individuals and corporations. Angular is a complete rewrite from the same team that built AngularJS.");
         angular.setLanguage(languageRepository.findByName("typescript"));
@@ -53,7 +57,7 @@ public class FixtureFactory {
         categories.add(angular);
 
         Category hibernate = new Category();
-        hibernate.setName("Hibernate");
+        hibernate.setName(CATEGORY_HIBERNATE);
         hibernate.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,27,10,32,25),null));
         hibernate.setDescription("Hibernate ORM (Hibernate in short) is an object-relational mapping tool for the Java programming language. ");
         hibernate.setLanguage(languageRepository.findByName("java"));
@@ -67,6 +71,7 @@ public class FixtureFactory {
     public static List<Topic> springTopics(CategoryRepository categoryRepository) {
         List<Topic> topics = new ArrayList<>();
         Topic topic = new Topic();
+
         topic.setName("Spring MVC");
         topic.setDescription("The Spring Web model-view-controller (MVC) framework is designed around a DispatcherServlet that dispatches requests to handlers, with configurable handler mappings, view resolution, locale and theme resolution as well as support for uploading files. The default handler is based on the @Controller and @RequestMapping annotations, offering a wide range of flexible handling methods. With the introduction of Spring 3.0, the @Controller mechanism also allows you to create RESTful Web sites and applications, through the @PathVariable annotation and other features. ");
         topic.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,27,4,30,22),null));
@@ -74,7 +79,15 @@ public class FixtureFactory {
         topic.setShortDescription("Component decorator allows you to mark a class as an Angular component and provide additional metadata that determines how the component should be processed, instantiated and used at runtime.");
         topics.add(topic);
 
-        topics.forEach(_topic ->  _topic.setCategory(categoryRepository.findByName("spring boot")));
+        topic = new Topic();
+        topic.setName("Validation");
+        topic.setDescription("There are pros and cons for considering validation as business logic, and Spring offers a design for validation (and data binding) that does not exclude either one of them. Specifically validation should not be tied to the web tier, should be easy to localize and it should be possible to plug in any validator available. Considering the above, Spring has come up with a Validator interface that is both basic ands eminently usable in every layer of an application.\n" + "\n" + "Data binding is useful for allowing user input to be dynamically bound to the domain model of an application (or whatever objects you use to process user input). Spring provides the so-called DataBinder to do exactly that. The Validator and the DataBinder make up the validation package, which is primarily used in but not limited to the MVC framework.");
+        topic.setBasicTime(new BasicTime(LocalDateTime.of(2018,4,30,9,30,22),null));
+        topic.setDifficulty(3);
+        topic.setShortDescription("JSR349 와 Hibernate Validation을 지원하는 스프링 검증 메커니즘을 이용하여 어떻게 모델의 유효성을 확인하는지 알아보자.");
+        topics.add(topic);
+
+        topics.forEach(_topic ->  _topic.setCategory(categoryRepository.findByName(CATEGORY_SPRINGBOOT)));
         return topics;
     }
 
@@ -111,16 +124,19 @@ public class FixtureFactory {
         topic.setDifficulty(4);
         topic.setShortDescription("Angular은 Form을 관리하는 FormControl, Validator, Observable을 지원한다.\n");
         topics.add(topic);
-        topics.forEach(_topic ->  _topic.setCategory(categoryRepository.findByName("angular")));
+        topics.forEach(_topic ->  _topic.setCategory(categoryRepository.findByName(CATEGORY_ANGULAR)));
         return topics;
     }
 
     public static List<Paragraph> paragraphs(TopicRepository topicRepository) {
         List<Paragraph> paragraphs = new ArrayList<>();
-        Topic components = topicRepository.findByNameAndCategoryName("components","angular");
+        Topic components = topicRepository.findByNameAndCategoryName("components",CATEGORY_ANGULAR);
         combineParagrpahs(paragraphs,angularComponentsParagraphs(components));
-        Topic routing = topicRepository.findByNameAndCategoryName("routing","angular");
+        Topic routing = topicRepository.findByNameAndCategoryName("routing",CATEGORY_ANGULAR);
         combineParagrpahs(paragraphs,angularRoutingParagraphs(routing));
+
+        Topic validation = topicRepository.findByNameAndCategoryName("validation",CATEGORY_SPRINGBOOT);
+        combineParagrpahs(paragraphs,springValidationParagraphs(validation));
         return paragraphs;
     }
 
@@ -128,6 +144,55 @@ public class FixtureFactory {
 
     private static void combineParagrpahs(List<Paragraph> context, List<Paragraph> addition) {
         addition.stream().forEach(paragraph -> context.add(paragraph));
+    }
+
+    public static List<Paragraph> springValidationParagraphs(Topic topic) {
+        List<Paragraph> paragraphs = new ArrayList<>();
+
+        Paragraph parent = new Paragraph();
+        parent.setTitle("Validation");
+        parent.setDescription("스프링은 폼 클래스에 대한 입력값 검사를 기본적으로 하지 않는다\n" + "\t@Validated 혹은 @Valid를 지정해야 검증을 실행한다\n");
+        parent.setCode("@PostMapping\n" + "Category save(@Validated @RequestBody Category category, BindingResult result) {\n" + "   result.getFieldErrors().stream().map(FieldError::getField).forEach(log::warn);\n" + "   return category;\n" + "}\n");
+        parent.setTopic(topic);
+        paragraphs.add(parent);
+
+        parent = new Paragraph();
+        parent.setTitle("BindingResult");
+        parent.setDescription("BindingResult은 폼 클래스(@ModelAttribute, @RequestBody)등의 검증 결과를 가지고 있고 아래의 인터페이스를 지원한다." +
+                "\thasErrors()  - 모든 필드의 에러 여부\n" + "\thasGlobalErrors() - 글러벌 필드의 에러 여부\n" + "\thasFieldErrors() - 필드 레벨의 에러 여부\n" + "\thasFieldError(String fieldName) - 해당 필드의 에러 여부\n");
+        parent.setCode("\t@PostMapping\n" + "HttpEntity<?> save(@Validated @RequestBody Category category, BindingResult result) {\n" + "   if(result.hasErrors()) {\n" + "       System.out.println(result.getFieldError().getField());\n" + "       throw new WebPostDataException(\"error.category.\"+result.getFieldError().getField());\n" + "   }\n" + "   return new HttpEntity<>(category);\n" + "}\n" + "\n" + "@ExceptionHandler(WebPostDataException.class)\n" + "public String handleException(WebApplicationException e) {\n" + "   return e.getCode();\n" + "}\n");
+        parent.setTopic(topic);
+        paragraphs.add(parent);
+
+        parent = new Paragraph();
+        parent.setTitle("Bean Validation(JSR-349 & Hibernate Validation)");
+        parent.setDescription("Bean Validation은 JAVA EE의 표준 검증 API며 어노테이션을 자바빈 프러퍼티에 적용하면 자동으로 검증을 수행해준다. Hibernate의 의존성을 추가하면 추가적인 편리한 기능도 적용할 수 있다." + "\n\n" +"@NotNull null이 아닐것\\n\" + \"\\t@NotBlank* - 문자열이 null이 아니고 trim한 길이가 0보다 크다는 것을 체크\\n\" + \"\\t@NotEmpty - 문자열, 컬렉션, 맵, 배열의 크기가 0 이상인지 확인\\n\" + \"\\t@Length -  문자열 길이를 검사\\n\" + \"\\t@Pattern -  문자 유형을 검사\\n\" + \"@Range -  숫자 범위를 검사한다.\\n\" + \"@Digits - 정수부와 소수부 자리수를 검사한다. (integer - 정수부, fraction - 소수부)\\n\" + \"@Past, @Future - 날짜의 과거, 미래인지를 검사한다\\n\" + \"@AssertTrue - 불린값을 검사한다.\\n");
+        parent.setTopic(topic);
+        paragraphs.add(parent);
+
+        Paragraph child = new Paragraph();
+        child.setTitle("제약 어노테이션의 속성");
+        child.setDescription("message - 제약 위반을 표시되는 오류 메시지를 지정\n" +
+                "\tgroups - 유효성 그룹을 지정한다. 기본값은 Default이다\n groups 속성값을 이용하면 입력값 검사 규칙을 교체할 수 있다.");
+        child.setCode("\n" + "interface PostForm extends Default {}  \n" + "//Default를 상속하면 그룹을 지정하지 않은 검사 규측을 검사 대상에 포함한다.\n" + "interface UpdateForm extends Default {}\n" + "\n" + "\n" + "@NotNull(message = ERROR_NOTNULL, groups = PostForm.class)\n" + "@Null(groups = UpdateForm.class)\n" + "@Enumerated(EnumType.STRING)\n" + "private CategoryType type;\n" + "\n" + "@PostMapping\n" + "HttpEntity<?> save(@Validated(UpdateForm.class) @RequestBody Category category, BindingResult result) {\n" + "   log.error(result.hasErrors() + \"\");\n" + "   result.getFieldErrors().stream().map(FieldError::getField).forEach(log::warn);\n" + "   System.out.println(category);\n" + "\n" + "   return new HttpEntity<>(category);\n" + "}\n");
+        child.setTopic(topic);
+        parent.addChild(child);
+
+        parent = new Paragraph();
+        parent.setTitle("StringTrimmerEditor");
+        parent.setDescription("StringTrimmerEditor은 스프링이 지원하는 PropertyEditor이며 DataBinder에 등록하면, 파라미터가 공백 문자일 경우 자동으로 null로 변환해준다.");
+        parent.setCode("@InitBinder\n" + "public void initBinder(WebDataBinder binder) {\n" + "   binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));\n" + "}\n" + "\n");
+        parent.setTopic(topic);
+        paragraphs.add(parent);
+
+        parent = new Paragraph();
+        parent.setTitle("에러 메시지 재정의");
+        parent.setDescription("바인딩 오류에서 표시되는 오류 메시지는 서드 파티에서 제공하는 메세지다.\n" + "\t국제화를 지원하려면 이 메시지를 재정의해야 된다.\n" + "\t아래와 같은 방법으로 재정의 할 수 있다.\n" + "\t1.MessageSource에서 메시지 재정의\n" + "\t2.Bean Validation에서 메시지 재정의\n" + "\t3.제약 어노테이션에서 메시지 속성으로 재정의\n");
+        parent.setCode("RootConfig\n" + "@Autowired\n" + "MessageSource messageSource;\n" + "\n" + "@Bean\n" + "LocalValidatorFactoryBean localeValidatorFactoryBean() { //Root에서 하이버네이트 validator 생성\n" + "   LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();\n" + "   validatorFactoryBean.setValidationMessageSource(messageSource);\n" + "   return  validatorFactoryBean;\n" + "}\n" + "\n" + "@Bean\n" + "MethodValidationPostProcessor methodValidationPostProcessor() {\n" + "   MethodValidationPostProcessor processor = new MethodValidationPostProcessor();\n" + "   processor.setValidator(localeValidatorFactoryBean());\n" + "   return processor;\n" + "}\n" + "\n" + "  2. WebConfig\n" + "@Autowired\n" + "LocalValidatorFactoryBean localValidatorFactoryBean;\n" + "\n" + "@Bean\n" + "@Override\n" + "public Validator getValidator() {\t\t//WebMvc에서 생성한 hibernatevalidator를 사용하도록 설정\n" + "   return localValidatorFactoryBean;\n" + "}\n" + "\n");
+        parent.setTopic(topic);
+        paragraphs.add(parent);
+
+        return paragraphs;
     }
 
     public static List<Paragraph> angularRoutingParagraphs(Topic topic) {
