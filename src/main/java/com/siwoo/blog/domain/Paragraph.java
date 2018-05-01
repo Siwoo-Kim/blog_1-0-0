@@ -12,11 +12,13 @@ import java.util.List;
 public class Paragraph {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="paragraph_id")
     private Long id;
+    @Column(name="paragraph_title")
     private String title;
-    @Column(length = 2000)
+    @Column(length = 2000,name = "paragraph_description")
     private String description;
-    @Column(length = 2000)
+    @Column(length = 2000,name = "paragraph_code")
     private String code;
 
     @ManyToOne
@@ -33,6 +35,7 @@ public class Paragraph {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private List<Paragraph> children = new ArrayList<>();
+
 
     public void setTopic(Topic topic) {
         this.topic = topic;
