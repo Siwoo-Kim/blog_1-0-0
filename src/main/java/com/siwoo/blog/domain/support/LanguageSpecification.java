@@ -5,10 +5,7 @@ import lombok.ToString;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter @ToString
 public class LanguageSpecification {
@@ -31,12 +28,14 @@ public class LanguageSpecification {
     }
 
     public LanguageSpecification(String value, Type... types) {
-        if(ObjectUtils.isEmpty(types) || !StringUtils.hasText(value)) {
+        Collection collection = Collections.unmodifiableCollection(Arrays.asList(types));
+        if(!collection.isEmpty() && StringUtils.hasText(value)) {
+            setTypes(collection);
+            this.value = value;
+        }else {
             empty = true;
-            return;
         }
-        setTypes(Arrays.asList(types));
-        this.value = value;
+
     }
 
     public void setTypes(Collection<Type> types) {

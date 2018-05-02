@@ -20,7 +20,7 @@ public class CategorySpecification {
     public CategorySpecification(String value, Type... types) {
         Collection collection = Collections.unmodifiableCollection(Arrays.asList(types));
         if(!collection.isEmpty() && StringUtils.hasText(value)) {
-            setTypes(Arrays.asList(types));
+            setTypes(collection);
             this.empty = false;
             this.value = value;
         }else {

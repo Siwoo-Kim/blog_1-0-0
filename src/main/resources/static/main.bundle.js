@@ -42,6 +42,7 @@ module.exports = "<mat-sidenav-container>\r\n  <mat-sidenav mode=\"over\" align=
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operators__ = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__service_data_source_service__ = __webpack_require__("./src/app/service/data-source.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__service_youtube_service__ = __webpack_require__("./src/app/service/youtube.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__service_topic_repository_service__ = __webpack_require__("./src/app/service/topic-repository.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57,8 +58,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(mdIconRegistry, sanitizer, dataSource, youtubeSerivce) {
+    function AppComponent(mdIconRegistry, sanitizer, dataSource, youtubeSerivce, topicRepository) {
         this.imageUrl = '/img';
         dataSource.get(this.imageUrl)
             .pipe(Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_operators__["mergeAll"])())
@@ -76,7 +78,8 @@ var AppComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatIconRegistry */],
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */],
             __WEBPACK_IMPORTED_MODULE_4__service_data_source_service__["a" /* DataSource */],
-            __WEBPACK_IMPORTED_MODULE_5__service_youtube_service__["a" /* YoutubeService */]])
+            __WEBPACK_IMPORTED_MODULE_5__service_youtube_service__["a" /* YoutubeService */],
+            __WEBPACK_IMPORTED_MODULE_6__service_topic_repository_service__["b" /* TopicRepository */]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1001,7 +1004,7 @@ var ServiceModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_6__token_repository_service__["a" /* TokenRepository */],
                 __WEBPACK_IMPORTED_MODULE_5__github_repository_service__["a" /* GitHubService */],
                 /*repository*/
-                __WEBPACK_IMPORTED_MODULE_8__topic_repository_service__["a" /* TopicRepository */],
+                __WEBPACK_IMPORTED_MODULE_8__topic_repository_service__["b" /* TopicRepository */],
                 __WEBPACK_IMPORTED_MODULE_7__category_repository_service__["a" /* CategoryRepository */],
                 __WEBPACK_IMPORTED_MODULE_10__paragraph_repository_service__["a" /* ParagraphRepository */],
                 __WEBPACK_IMPORTED_MODULE_9__language_repository_service__["a" /* LanguageRepository */],
@@ -1057,7 +1060,8 @@ var TokenRepository = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TopicRepository; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClickedTopic; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TopicRepository; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_source_service__ = __webpack_require__("./src/app/service/data-source.service.ts");
@@ -1075,12 +1079,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+var ClickedTopic = /** @class */ (function () {
+    function ClickedTopic(topicName, categoryName) {
+        this.topicName = topicName;
+        this.categoryName = categoryName;
+    }
+    return ClickedTopic;
+}());
+
 var TopicRepository = /** @class */ (function () {
     function TopicRepository(dataSource) {
+        var _this = this;
         this.dataSource = dataSource;
         this.topicUrl = 'topic';
         this.clickedTopicUrl = 'topic/clickedTopic';
         this.clickedTopics = [];
+        this.dataSource.get(this.clickedTopicUrl)
+            .subscribe(function (_clickedTopics) { return _this.clickedTopics = _clickedTopics; });
     }
     TopicRepository.prototype.byCategoryName = function (categoryName) {
         return this.dataSource.get(this.topicUrl, new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]()
@@ -1095,11 +1110,11 @@ var TopicRepository = /** @class */ (function () {
             .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["d" /* BY_TOPIC_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["d" /* BY_TOPIC_NAME */].value)
             .set('value', topicName));
     };
-    TopicRepository.prototype.putClickedTopic = function (name) {
+    TopicRepository.prototype.putClickedTopic = function (clickedTopic) {
         var _this = this;
-        return this.dataSource.post(this.clickedTopicUrl, {
-            topicName: name
-        }).subscribe(function (_clickedTopics) { return _this.clickedTopics = _clickedTopics; });
+        return this.dataSource
+            .post(this.clickedTopicUrl, clickedTopic)
+            .subscribe(function (_clickedTopics) { _this.clickedTopics = _clickedTopics; console.log(_this.clickedTopics); });
     };
     TopicRepository = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
@@ -1175,14 +1190,14 @@ var YoutubeService = /** @class */ (function () {
 /***/ "./src/app/shared/bootstrap.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "\r\nfigure.mat-figure {\r\n  border: 1px solid #0f0f10;\r\n}\r\n\r\napp-git-user {\r\n  margin-top: 25px;\r\n  padding: 15px 15px 0;\r\n}\r\n\r\nmat-grid-tile {\r\n  overflow: auto;\r\n}\r\n\r\n.grid.container {\r\n  padding-top: 45px;\r\n}\r\n\r\nmat-grid-tile-header, mat-grid-tile-footer {\r\n  background-color: #fdfdfd !important;\r\n}\r\n"
+module.exports = "\r\nfigure.mat-figure {\r\n  border: 1px solid #0f0f10;\r\n}\r\n\r\napp-git-user {\r\n  margin-top: 25px;\r\n  padding: 15px 15px 0;\r\n}\r\n\r\nmat-grid-tile {\r\n  overflow: auto;\r\n}\r\n\r\n.grid.container {\r\n  padding-top: 45px;\r\n}\r\n\r\nmat-grid-tile-header, mat-grid-tile-footer {\r\n  background-color: #fdfdfd !important;\r\n}\r\n\r\n.recent-topics span.purple {\r\n  color:  #3f51b5;\r\n}\r\n\r\n.recent-topics {\r\n  top: 35px;\r\n  position: -webkit-sticky;\r\n  padding-left: 25px;\r\n  position: sticky;font-size: 13px;\r\n}\r\n\r\n.recent-topic-list {\r\n  width: 80%;\r\n  font-weight: 400;\r\n  padding: 5px 0 10px 10px;\r\n  border-left: 4px solid #3f51b5;\r\n}\r\n\r\n.recent-topic-list a {\r\n  color: rgba(0,0,0,.54);\r\n  font-weight: 500;\r\n  -webkit-transition: color .1s;\r\n  transition: color .1s;\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/shared/bootstrap.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-grid-list class=\"mat-typography mt-3 pt-0 p-3\" cols=\"4\" gutterSize=\"15px\" rowHeight=\"400px\" >\n  <mat-grid-tile [colspan]=\"3\" [rowspan]=\"1\">\n    <mat-grid-tile-header>\n      <mat-icon [svgIcon]=\"'github-img'\" ></mat-icon>\n    </mat-grid-tile-header>\n    <app-git-user [github]=\"github\" ></app-git-user>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"2\">\n    <mat-grid-tile-header>\n      <mat-icon color=\"primary\" style=\"font-size: 2em\">timeline</mat-icon>&nbsp; Recent Content\n    </mat-grid-tile-header>\n      <div role=\"list\" fxLayout=\"column\" fxLayoutAlign=\"start\" fxFlex=\"100%\" style=\"height: 85%\">\n        <div class=\"recent-topics\" style=\"    top: 35px;\n    position: -webkit-sticky;    padding-left: 25px;\n    position: sticky;font-size: 13px;\">\n          <mat-list dense style=\"     font-weight: 400;   padding: 5px 0 10px 10px;    border-left: 4px solid #3f51b5;\">\n            <mat-list-item><span class=\"mat-h4\">Your Recent topics</span></mat-list-item>\n            <mat-list-item *ngIf=\"topicRepository.clickedTopics?.length == 0\"> - No Recent topic - </mat-list-item>\n            <mat-list-item style=\"color: rgba(0,0,0,.54);\n    font-weight: 600;\n    transition: color .1s;\" *ngFor=\"let topic of topicRepository.clickedTopics;let i = index;\"> {{ (i+1) + '. ' }} {{ topic.topicName }}</mat-list-item>\n          </mat-list>\n        </div>\n\n      </div>\n  </mat-grid-tile>\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Third Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"2\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Fourth Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n</mat-grid-list>\n"
+module.exports = "<mat-grid-list class=\"mat-typography mt-3 pt-0 p-3\" cols=\"4\" gutterSize=\"15px\" rowHeight=\"400px\" >\n  <mat-grid-tile [colspan]=\"3\" [rowspan]=\"1\">\n    <mat-grid-tile-header>\n      <mat-icon [svgIcon]=\"'github-img'\" ></mat-icon>\n    </mat-grid-tile-header>\n    <app-git-user [github]=\"github\" ></app-git-user>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"2\">\n    <mat-grid-tile-header>\n      <mat-icon color=\"primary\" style=\"font-size: 2em\">timeline</mat-icon>&nbsp; Recent Content\n    </mat-grid-tile-header>\n      <div role=\"list\" fxLayout=\"column\" fxLayoutAlign=\"start\" fxFlex=\"100%\" style=\"height: 85%\">\n        <div class=\"recent-topics\">\n          <mat-nav-list class=\"recent-topic-list\" dense>\n            <mat-list-item>\n              <span class=\"mat-h4 purple\">Your Recent topics</span>\n            </mat-list-item>\n            <mat-list-item *ngIf=\"topicRepository.clickedTopics?.length == 0\"> - No Recent topic - </mat-list-item>\n            <a mat-list-item\n               *ngFor=\"let clickedTopic of topicRepository.clickedTopics;let i = index;\"\n               [routerLink]=\"['/topic',clickedTopic?.categoryName,clickedTopic?.topicName]\">\n                {{ (i+1) + '. ' }} {{ clickedTopic.topicName }}\n            </a>\n          </mat-nav-list>\n        </div>\n      </div>\n  </mat-grid-tile>\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Third Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <div style=\"p-2\">\n        <h3 class=\"ui header\">We Help Companies and Companions</h3>\n        <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>\n        <h3 class=\"ui header\">We Make Bananas That Can Dance</h3>\n        <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>\n      </div>\n    </div>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"2\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Fourth Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <div class=\"ui text p-2\" >\n        <h3 class=\"ui header\">Breaking The Grid, Grabs Your Attention</h3>\n        <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>\n        <a class=\"ui large button\">Read More</a>\n        <h4 class=\"ui horizontal header divider\">\n          <a href=\"#\">Case Studies</a>\n        </h4>\n        <h3 class=\"ui header\">Did We Tell You About Our Bananas?</h3>\n        <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>\n        <a class=\"ui large button\">I'm Still Quite Interested</a>\n      </div>\n    </div>\n  </mat-grid-tile>\n</mat-grid-list>\n"
 
 /***/ }),
 
@@ -1231,7 +1246,7 @@ var BootstrapComponent = /** @class */ (function () {
         }),
         __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_2__app_tokens__["b" /* ADMIN_GITHUB_TOKEN */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_github_repository_service__["a" /* GitHubService */],
-            __WEBPACK_IMPORTED_MODULE_3__service_topic_repository_service__["a" /* TopicRepository */], String])
+            __WEBPACK_IMPORTED_MODULE_3__service_topic_repository_service__["b" /* TopicRepository */], String])
     ], BootstrapComponent);
     return BootstrapComponent;
 }());
@@ -2837,7 +2852,7 @@ var SessionComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/tester/session/session.component.html"),
             styles: [__webpack_require__("./src/app/tester/session/session.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_topic_repository_service__["a" /* TopicRepository */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_topic_repository_service__["b" /* TopicRepository */],
             __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], SessionComponent);
     return SessionComponent;
@@ -4087,7 +4102,7 @@ var TopicMainComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_4__service_category_repository_service__["a" /* CategoryRepository */],
-            __WEBPACK_IMPORTED_MODULE_6__service_topic_repository_service__["a" /* TopicRepository */]])
+            __WEBPACK_IMPORTED_MODULE_6__service_topic_repository_service__["b" /* TopicRepository */]])
     ], TopicMainComponent);
     return TopicMainComponent;
 }());
@@ -4215,7 +4230,7 @@ var TopicParagraphComponent = /** @class */ (function () {
             var _topic = _a[0], _paragraphs = _a[1];
             _this.topic = _topic;
             _this.paragraphs = _paragraphs;
-            _this.topicRepository.putClickedTopic(_this.topic.name);
+            _this.topicRepository.putClickedTopic(new __WEBPACK_IMPORTED_MODULE_5__service_topic_repository_service__["a" /* ClickedTopic */](_this.topic.name, _this.topic.category.name));
         });
     }
     TopicParagraphComponent.prototype.ngOnInit = function () {
@@ -4227,7 +4242,7 @@ var TopicParagraphComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/topic/topic-paragraph/topic-paragraph.component.css")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__service_paragraph_repository_service__["a" /* ParagraphRepository */],
-            __WEBPACK_IMPORTED_MODULE_5__service_topic_repository_service__["a" /* TopicRepository */],
+            __WEBPACK_IMPORTED_MODULE_5__service_topic_repository_service__["b" /* TopicRepository */],
             __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]])
     ], TopicParagraphComponent);
     return TopicParagraphComponent;

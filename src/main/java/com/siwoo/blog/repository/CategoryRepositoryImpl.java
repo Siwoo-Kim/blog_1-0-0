@@ -4,7 +4,6 @@ import com.siwoo.blog.domain.Category;
 import com.siwoo.blog.domain.CategoryType;
 import com.siwoo.blog.domain.Language;
 import com.siwoo.blog.domain.support.CategorySpecification;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static com.siwoo.blog.domain.support.CategorySpecification.*;
 import static com.siwoo.blog.repository.support.RepositorySupporter.*;
@@ -75,7 +74,7 @@ public class CategoryRepositoryImpl implements CustomCategoryRepository {
             }
         }
 
-        System.out.println(criteria);
-        return entityManager.createQuery(query.where(criteria)).getResultList();
+        return entityManager.createQuery(query.where(criteria))
+                .getResultList();
     }
 }

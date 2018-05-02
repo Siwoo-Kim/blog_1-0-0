@@ -14,16 +14,25 @@ import java.util.*;
 public class ClickedTopics {
 
     private final static int maxSize = 5;
-    List<ClickedTopic> topics = new ArrayList<>();
+
+    private List<ClickedTopic> topics = new ArrayList<>();
 
     @Data
-    @EqualsAndHashCode(of = "topicName")
+    @EqualsAndHashCode(of = {"topicName","categoryName"})
     public static class ClickedTopic {
         String topicName;
+        String categoryName;
     }
 
     public List<ClickedTopic> getTopics() {
         return Collections.unmodifiableList(topics);
+    }
+
+    protected void setTopics(List<ClickedTopic> topics) {
+        if(topics.size() > maxSize) {
+            throw new IllegalStateException();
+        }
+        this.topics = new ArrayList<>(topics);
     }
 
     public void addTopic(ClickedTopic clickedTopic) {

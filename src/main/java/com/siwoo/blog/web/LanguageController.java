@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.siwoo.blog.domain.support.LanguageSpecification.Type.ALL;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -22,6 +20,6 @@ public class LanguageController {
     @GetMapping(params = {"by=specification","request=all_any"})
     public List<Language> searchAny(@RequestParam String value) {
         return languageRepository
-                .searchAny(new LanguageSpecification(value,new HashSet<>(Arrays.asList(ALL))));
+                .searchAny(new LanguageSpecification(value,ALL));
     }
 }
