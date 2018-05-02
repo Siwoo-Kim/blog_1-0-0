@@ -1,6 +1,7 @@
 package com.siwoo.blog.web;
 
 import com.siwoo.blog.domain.Category;
+import com.siwoo.blog.domain.support.CategorySpecification;
 import com.siwoo.blog.domain.support.CategoryValidationGroup.*;
 import com.siwoo.blog.domain.support.ShortCategory;
 import com.siwoo.blog.repository.CategoryRepository;
@@ -8,15 +9,14 @@ import com.siwoo.blog.service.CategoryService;
 import com.siwoo.blog.web.exception.CategoryNotFoundException;
 import com.siwoo.blog.web.support.ErrorMessage;
 import com.siwoo.blog.web.support.WebDataBindingException;
-import io.netty.util.internal.ObjectUtil;
+import static com.siwoo.blog.domain.support.CategorySpecification.Type.ALL;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -73,6 +73,11 @@ public class CategoryController {
     @GetMapping(params = {"request=short","by=categoryName"})
     ShortCategory allShortsByCategoryName(@RequestParam String value) {
         return categoryService.shortAllByCategoryNameFetched(value);
+    }
+
+    @GetMapping(params = {"by=specification","request=all_any"})
+    List<Category> searchAny(@RequestParam String value) {
+        return categoryRepository.searchAny(new CategorySpecification(value, ALL));
     }
 
     @Autowired

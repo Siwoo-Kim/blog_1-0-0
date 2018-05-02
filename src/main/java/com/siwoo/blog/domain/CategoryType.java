@@ -18,4 +18,8 @@ public enum  CategoryType {
             default: return null;
         }
     }
+
+    public static boolean isMember(String value) {
+        return CategoryType.memberOf(value) != null;
+    }
 }

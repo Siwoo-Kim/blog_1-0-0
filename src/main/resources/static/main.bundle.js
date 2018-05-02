@@ -584,7 +584,6 @@ var RoutingModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_source_service__ = __webpack_require__("./src/app/service/data-source.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__param_rule_model__ = __webpack_require__("./src/app/service/param-rule.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -594,7 +593,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -610,32 +608,41 @@ var CategoryRepository = /** @class */ (function () {
     CategoryRepository.prototype.allNames = function () {
         return this.dataSource
             .get(this.categoryUrl, new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpParams */]()
-            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["e" /* REQUEST_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["e" /* REQUEST_NAME */].value));
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_NAME */].value));
     };
     CategoryRepository.prototype.allShorts = function () {
         return this.dataSource.get(this.categoryUrl, new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpParams */]()
-            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_SHORT */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_SHORT */].value));
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["g" /* REQUEST_SHORT */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["g" /* REQUEST_SHORT */].value));
     };
     CategoryRepository.prototype.allShortByCategoryName = function (categoryName) {
         if (!categoryName)
             return null;
         return this.dataSource.get(this.categoryUrl, new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpParams */]()
-            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_SHORT */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["f" /* REQUEST_SHORT */].value)
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["g" /* REQUEST_SHORT */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["g" /* REQUEST_SHORT */].value)
             .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["a" /* BY_CATEGORY_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["a" /* BY_CATEGORY_NAME */].value)
             .set('value', categoryName));
     };
     CategoryRepository.prototype.byName = function (name) {
         if (!name) {
-            return Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_observable_of__["a" /* of */])(null);
+            return null;
         }
         return this.dataSource
             .get(this.categoryUrl, new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpParams */]()
             .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["b" /* BY_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["b" /* BY_NAME */].value)
             .set('value', name));
     };
+    CategoryRepository.prototype.searchAny = function (value) {
+        if (!value) {
+            return null;
+        }
+        return this.dataSource.get(this.categoryUrl, new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpParams */]()
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["c" /* BY_SPECIFICATION */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["c" /* BY_SPECIFICATION */].value)
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["e" /* REQUEST_ALL_ANY */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["e" /* REQUEST_ALL_ANY */].value)
+            .set('value', value));
+    };
     CategoryRepository.prototype.testPost = function (category) {
         if (!category) {
-            return Object(__WEBPACK_IMPORTED_MODULE_4_rxjs_observable_of__["a" /* of */])(null);
+            return null;
         }
         return this.dataSource.post(this.categoryUrl, category);
     };
@@ -794,6 +801,7 @@ var LanguageRepository = /** @class */ (function () {
         /*if(value == null || value.length == 0) return null;*/
         return this.dataSource.get(this.languageUrl, new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]()
             .set(__WEBPACK_IMPORTED_MODULE_2__param_rule_model__["c" /* BY_SPECIFICATION */].key, __WEBPACK_IMPORTED_MODULE_2__param_rule_model__["c" /* BY_SPECIFICATION */].value)
+            .set(__WEBPACK_IMPORTED_MODULE_2__param_rule_model__["e" /* REQUEST_ALL_ANY */].key, __WEBPACK_IMPORTED_MODULE_2__param_rule_model__["e" /* REQUEST_ALL_ANY */].value)
             .set('value', value));
     };
     LanguageRepository = __decorate([
@@ -922,8 +930,9 @@ var ParagraphRepository = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BY_CATEGORY_NAME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return BY_TOPIC_NAME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BY_SPECIFICATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return REQUEST_NAME; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return REQUEST_SHORT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return REQUEST_NAME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return REQUEST_SHORT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return REQUEST_ALL_ANY; });
 var ParamRule = /** @class */ (function () {
     function ParamRule(key, value) {
         this.key = key;
@@ -941,6 +950,7 @@ var BY_SPECIFICATION = new ParamRule('by', 'specification');
 /*REQUEST PARAMS*/
 var REQUEST_NAME = new ParamRule('request', 'name');
 var REQUEST_SHORT = new ParamRule('request', 'short');
+var REQUEST_ALL_ANY = new ParamRule('request', 'all_any');
 
 
 /***/ }),
@@ -1069,14 +1079,27 @@ var TopicRepository = /** @class */ (function () {
     function TopicRepository(dataSource) {
         this.dataSource = dataSource;
         this.topicUrl = 'topic';
+        this.clickedTopicUrl = 'topic/clickedTopic';
+        this.clickedTopics = [];
     }
-    TopicRepository.prototype.byCategoryName = function (_categoryName) {
+    TopicRepository.prototype.byCategoryName = function (categoryName) {
         return this.dataSource.get(this.topicUrl, new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]()
             .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["a" /* BY_CATEGORY_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["a" /* BY_CATEGORY_NAME */].value)
-            .set('value', _categoryName));
+            .set('value', categoryName));
     };
     TopicRepository.prototype.byTopicNameAndCategoryName = function (categoryName, topicName) {
         return this.dataSource.get(this.topicUrl + "/" + categoryName + "/" + topicName);
+    };
+    TopicRepository.prototype.byTopicName = function (topicName) {
+        return this.dataSource.get(this.topicUrl, new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]()
+            .set(__WEBPACK_IMPORTED_MODULE_3__param_rule_model__["d" /* BY_TOPIC_NAME */].key, __WEBPACK_IMPORTED_MODULE_3__param_rule_model__["d" /* BY_TOPIC_NAME */].value)
+            .set('value', topicName));
+    };
+    TopicRepository.prototype.putClickedTopic = function (name) {
+        var _this = this;
+        return this.dataSource.post(this.clickedTopicUrl, {
+            topicName: name
+        }).subscribe(function (_clickedTopics) { return _this.clickedTopics = _clickedTopics; });
     };
     TopicRepository = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
@@ -1159,7 +1182,7 @@ module.exports = "\r\nfigure.mat-figure {\r\n  border: 1px solid #0f0f10;\r\n}\r
 /***/ "./src/app/shared/bootstrap.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-grid-list class=\"mat-typography mt-3 pt-0 p-3\" cols=\"4\" gutterSize=\"15px\" rowHeight=\"400px\" >\n  <mat-grid-tile [colspan]=\"3\" [rowspan]=\"1\">\n    <mat-grid-tile-header>\n      <mat-icon [svgIcon]=\"'github-img'\" ></mat-icon>\n    </mat-grid-tile-header>\n    <app-git-user [github]=\"github\" ></app-git-user>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"2\">\n    <mat-grid-tile-header>\n      <mat-icon color=\"primary\" style=\"font-size: 2em\">list</mat-icon>&nbsp; Recent Content\n    </mat-grid-tile-header>\n      <mat-list role=\"list\" fxLayout=\"column\" fxLayoutAlign=\"start\">\n        <mat-list-item role=\"listitem\">Item 1</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 2</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 3</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 1</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 2</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 3</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 1</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 2</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 3</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 1</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 2</mat-list-item>\n        <mat-list-item role=\"listitem\">Item 3</mat-list-item>\n      </mat-list>\n  </mat-grid-tile>\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Third Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"2\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Fourth Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n</mat-grid-list>\n"
+module.exports = "<mat-grid-list class=\"mat-typography mt-3 pt-0 p-3\" cols=\"4\" gutterSize=\"15px\" rowHeight=\"400px\" >\n  <mat-grid-tile [colspan]=\"3\" [rowspan]=\"1\">\n    <mat-grid-tile-header>\n      <mat-icon [svgIcon]=\"'github-img'\" ></mat-icon>\n    </mat-grid-tile-header>\n    <app-git-user [github]=\"github\" ></app-git-user>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"2\">\n    <mat-grid-tile-header>\n      <mat-icon color=\"primary\" style=\"font-size: 2em\">timeline</mat-icon>&nbsp; Recent Content\n    </mat-grid-tile-header>\n      <div role=\"list\" fxLayout=\"column\" fxLayoutAlign=\"start\" fxFlex=\"100%\" style=\"height: 85%\">\n        <div class=\"recent-topics\" style=\"    top: 35px;\n    position: -webkit-sticky;    padding-left: 25px;\n    position: sticky;font-size: 13px;\">\n          <mat-list dense style=\"     font-weight: 400;   padding: 5px 0 10px 10px;    border-left: 4px solid #3f51b5;\">\n            <mat-list-item><span class=\"mat-h4\">Your Recent topics</span></mat-list-item>\n            <mat-list-item *ngIf=\"topicRepository.clickedTopics?.length == 0\"> - No Recent topic - </mat-list-item>\n            <mat-list-item style=\"color: rgba(0,0,0,.54);\n    font-weight: 600;\n    transition: color .1s;\" *ngFor=\"let topic of topicRepository.clickedTopics;let i = index;\"> {{ (i+1) + '. ' }} {{ topic.topicName }}</mat-list-item>\n          </mat-list>\n        </div>\n\n      </div>\n  </mat-grid-tile>\n  <mat-grid-tile [colspan]=\"1\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Third Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n\n  <mat-grid-tile [colspan]=\"2\" [rowspan]=\"1\" >\n    <mat-grid-tile-header>Fourth Column</mat-grid-tile-header>\n    <div fxLayout=\"column\">\n      <h2 class=\"ui header\">Dogs Roles with Humans</h2>\n      <p>Domestic dogs inherited complex behaviors, such as bite inhibition, from their wolf ancestors, which would have been pack hunters with complex body language. These sophisticated forms of social cognition and communication may account for their trainability, playfulness, and ability to fit into human households and social situations, and these attributes have given dogs a relationship with humans that has enabled them to become one of the most successful species on the planet today.</p>\n    </div>\n  </mat-grid-tile>\n</mat-grid-list>\n"
 
 /***/ }),
 
@@ -1171,6 +1194,7 @@ module.exports = "<mat-grid-list class=\"mat-typography mt-3 pt-0 p-3\" cols=\"4
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_github_repository_service__ = __webpack_require__("./src/app/service/github-repository.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_tokens__ = __webpack_require__("./src/app/app.tokens.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__service_topic_repository_service__ = __webpack_require__("./src/app/service/topic-repository.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1186,10 +1210,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 
 
 
+
 var BootstrapComponent = /** @class */ (function () {
-    function BootstrapComponent(githubRepository, adminName) {
+    function BootstrapComponent(githubRepository, topicRepository, adminName) {
         var _this = this;
         this.githubRepository = githubRepository;
+        this.topicRepository = topicRepository;
         this.adminName = adminName;
         this.githubRepository
             .byName(this.adminName)
@@ -1203,8 +1229,9 @@ var BootstrapComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/shared/bootstrap.component.html"),
             styles: [__webpack_require__("./src/app/shared/bootstrap.component.css")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_2__app_tokens__["b" /* ADMIN_GITHUB_TOKEN */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_github_repository_service__["a" /* GitHubService */], String])
+        __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_2__app_tokens__["b" /* ADMIN_GITHUB_TOKEN */])),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_github_repository_service__["a" /* GitHubService */],
+            __WEBPACK_IMPORTED_MODULE_3__service_topic_repository_service__["a" /* TopicRepository */], String])
     ], BootstrapComponent);
     return BootstrapComponent;
 }());
@@ -1756,14 +1783,14 @@ var PanelComponent = /** @class */ (function () {
 /***/ "./src/app/shared/search-header/search-header.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n.search-field {\r\n  display: contents !important;\r\n  color: white;\r\n  font-weight: 700;\r\n  line-height: 16px;\r\n  font-size: 13px;\r\n  margin-bottom: 2px;\r\n}\r\n\r\n.app-header-right {\r\n  margin-bottom: 10px;\r\n}\r\n\r\nmat-list .mat-subheader{\r\n  font-weight: 700;\r\n}\r\n\r\nmat-list h4.mat-line {\r\n  text-align: start;\r\n  font-weight: 500;\r\n  line-height: 1.5;\r\n}\r\n\r\nmat-list p.mat-line {\r\n  text-align: end;\r\n}\r\n\r\n.app-search-result {\r\n  position: fixed;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: #ededf1;\r\n  z-index: 2;\r\n  overflow: auto;\r\n  text-align: center;\r\n  padding: 30px 30px 0;\r\n  max-height: 800px;\r\n  font-size: 12px;\r\n  top: 56px;\r\n  height: auto;\r\n  -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);\r\n  box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);;\r\n}\r\n\r\n.result-content {\r\n  padding: 0px 50px 50px 50px;\r\n}\r\n\r\n.no-result-content {\r\n  padding: 0px 50px 50px 50px;\r\n}\r\n"
+module.exports = "\r\n.search-field {\r\n  display: contents !important;\r\n  color: white;\r\n  font-weight: 700;\r\n  line-height: 16px;\r\n  font-size: 13px;\r\n  margin-bottom: 2px;\r\n}\r\n\r\n.app-header-right {\r\n  margin-bottom: 10px;\r\n}\r\n\r\nmat-list .mat-subheader{\r\n  font-weight: 700;\r\n  color: white;\r\n}\r\n\r\nmat-list h4.mat-line {\r\n  text-align: start;\r\n  font-weight: 400;\r\n  line-height: 1.5;\r\n  color: white;\r\n}\r\n\r\nmat-list p.mat-line {\r\n  text-align: end;\r\n  color: white;\r\n}\r\n\r\nmat-list .active h4 {\r\n  font-weight: 700;\r\n  color: #ff9cd2!important;\r\n}\r\n\r\n.app-search-result {\r\n  position: fixed;\r\n  left: 0;\r\n  right: 0;\r\n  z-index: 2;\r\n  overflow: auto;\r\n  text-align: center;\r\n  padding: 30px 30px 0;\r\n  max-height: 800px;\r\n  font-size: 12px;\r\n  top: 56px;\r\n  height: auto;\r\n  -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);\r\n  box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);;\r\n}\r\n\r\n.result-content {\r\n  padding: 0px 25px 25px 25px;\r\n}\r\n\r\n.no-result-content {\r\n  padding: 0px 50px 50px 50px;\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/shared/search-header/search-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"app-search-result\"\n             fxLayout=\"row no-wrap\"\n             fxLayoutAlign=\"space-evenly center\">\n  <div class=\"no-result-content\" fxFlex=\"100%\" *ngIf=\"resultEmpty\" >\n    <mat-list>\n      <h3 mat-subheader>No Result</h3>\n      <mat-divider></mat-divider>\n    </mat-list>\n  </div>\n  <div class=\"result-content\" fxFlex=\"30%\" *ngIf=\"!resultEmpty\">\n    <mat-list>\n      <h3 mat-subheader>Language</h3>\n      <mat-divider></mat-divider>\n      <mat-list-item *ngFor=\"let language of languages\">\n        <h4 mat-line >{{ language.name }}</h4>\n        <i class=\"ui label grey\" ><i class=\"ui icon leaf\"></i> {{ language.type }}</i>\n      </mat-list-item>\n    </mat-list>\n  </div>\n  <div class=\"result-result-content\" fxFlex=\"30%\"\n       fxLayout=\"column\"\n       fxLayoutAlign=\"start\">\n    <mat-list dense>\n    </mat-list>\n  </div>\n  <div class=\"result-result-content\" fxFlex=\"30%\"\n       fxLayout=\"column\"\n       fxLayoutAlign=\"start\">\n    <mat-list dense>\n    </mat-list>\n  </div>\n</mat-toolbar>\n"
+module.exports = "<mat-toolbar class=\"app-search-result\"\n             fxLayout=\"row no-wrap\"\n             color=\"primary\"\n             fxLayoutAlign=\"space-evenly center\">\n  <div class=\"no-result-content\" fxFlex=\"100%\" *ngIf=\"resultEmpty && !loading\" >\n    <mat-list>\n      <h3 mat-subheader>No Result</h3>\n      <mat-divider></mat-divider>\n    </mat-list>\n  </div>\n  <div class=\"no-result-content\" fxFlex=\"100%\"\n       *ngIf=\"loading\"\n       fxLayout=\"column\"\n       fxLayoutAlign=\"center center\">\n    <mat-progress-spinner color=\"accent\"\n                          mode=\"indeterminate\"\n                          [diameter]=\"150\"></mat-progress-spinner>\n    <p class=\"ui pink mt-5\"> Fetching Data.. </p>\n  </div>\n  <div class=\"result-content\"\n       fxFlex=\"30%\"\n       fxFlex.lt-lg=\"100%\"\n       *ngIf=\"!languageEmpty && !loading\">\n    <mat-list>\n      <h3 mat-subheader>Language ({{languages.length}})</h3>\n      <mat-divider></mat-divider>\n      <mat-list-item *ngFor=\"let language of languages\">\n        <h4 mat-line >{{ language.name }}</h4>\n        <mat-chip-list fxHide.lt-sm=\"true\" ><mat-chip selected=\"true\" color=\"accent\" >{{language.type}}</mat-chip></mat-chip-list>\n      </mat-list-item>\n    </mat-list>\n  </div>\n  <div class=\"result-content\" fxFlex=\"30%\" fxFlex.lt-lg=\"100%\" *ngIf=\"!categoryEmpty && !loading\">\n    <mat-list>\n      <h3 mat-subheader>Category ({{categories.length}})</h3>\n      <mat-divider></mat-divider>\n      <a mat-list-item\n         *ngFor=\"let category of categories\"\n         [routerLinkActive]=\"'active'\"\n         [routerLink]=\"['/topic',category.name,'main']\" >\n        <h4 mat-line >{{ category.name }}</h4>\n        <mat-chip-list  fxHide.lt-sm=\"true\" ><mat-chip selected=\"true\" color=\"accent\" >{{category.type}}</mat-chip></mat-chip-list>\n      </a>\n    </mat-list>\n  </div>\n  <div class=\"result-content\" fxFlex=\"30%\" fxFlex.lt-lg=\"100%\" *ngIf=\"!resultEmpty && !loading\">\n    <mat-list>\n      <h3 mat-subheader>Topics</h3>\n      <mat-divider></mat-divider>\n      <mat-list-item >\n        <h4 mat-line ></h4>\n        <mat-chip-list  fxHide.lt-sm=\"true\" ><mat-chip selected=\"true\" color=\"accent\" >no result</mat-chip></mat-chip-list>\n      </mat-list-item>\n    </mat-list>\n  </div>\n</mat-toolbar>\n"
 
 /***/ }),
 
@@ -1776,6 +1803,8 @@ module.exports = "<mat-toolbar class=\"app-search-result\"\n             fxLayou
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_operators__ = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__service_language_repository_service__ = __webpack_require__("./src/app/service/language-repository.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__service_category_repository_service__ = __webpack_require__("./src/app/service/category-repository.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_observable_forkJoin__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/forkJoin.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1789,17 +1818,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var SearchHeaderComponent = /** @class */ (function () {
-    function SearchHeaderComponent(languageRepository) {
+    function SearchHeaderComponent(languageRepository, categoryRepository) {
         this.languageRepository = languageRepository;
+        this.categoryRepository = categoryRepository;
+        this.loading = false;
     }
     SearchHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.searchForm.valueChanges.pipe(Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["debounceTime"])(500), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["distinctUntilChanged"])(), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["switchMap"])(function (value) { return _this.languageRepository.searchAny(value); })).subscribe(function (_languages) { return _this.languages = _languages; });
+        this.searchForm.valueChanges.pipe(Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["debounceTime"])(500), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["tap"])(function () { return _this.loading = true; }), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["distinctUntilChanged"])(), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["filter"])(function (value) { return value && value.length > 0; }), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["switchMap"])(function (value) {
+            return Object(__WEBPACK_IMPORTED_MODULE_5_rxjs_observable_forkJoin__["a" /* forkJoin */])(_this.languageRepository.searchAny(value), _this.categoryRepository.searchAny(value));
+        }), Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_operators__["delay"])(1000)).subscribe(function (_a) {
+            var _languages = _a[0], _categories = _a[1];
+            _this.languages = _languages;
+            _this.categories = _categories;
+            _this.loading = false;
+        });
     };
+    Object.defineProperty(SearchHeaderComponent.prototype, "languageEmpty", {
+        get: function () {
+            return (this.languages == null || this.languages.length == 0);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SearchHeaderComponent.prototype, "categoryEmpty", {
+        get: function () {
+            return (this.categories == null || this.categories.length == 0);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(SearchHeaderComponent.prototype, "resultEmpty", {
         get: function () {
-            return this.languages == null || this.languages.length == 0;
+            return this.languageEmpty && this.categoryEmpty;
         },
         enumerable: true,
         configurable: true
@@ -1814,7 +1868,8 @@ var SearchHeaderComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/shared/search-header/search-header.component.html"),
             styles: [__webpack_require__("./src/app/shared/search-header/search-header.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__service_language_repository_service__["a" /* LanguageRepository */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__service_language_repository_service__["a" /* LanguageRepository */],
+            __WEBPACK_IMPORTED_MODULE_4__service_category_repository_service__["a" /* CategoryRepository */]])
     ], SearchHeaderComponent);
     return SearchHeaderComponent;
 }());
@@ -2433,6 +2488,365 @@ var SimpleLoginComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/tester/rxjs/model/t-message.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TMessage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_uuid__ = __webpack_require__("./src/app/tester/rxjs/util/uuid.ts");
+
+var TMessage = /** @class */ (function () {
+    function TMessage(obj) {
+        this.id = obj && obj.id || Object(__WEBPACK_IMPORTED_MODULE_0__util_uuid__["a" /* uuid */])();
+        this.isRead = obj && obj.isRead || false;
+        this.sentAt = obj && obj.sentAt || new Date();
+        this.author = obj && obj.author || null;
+        this.text = obj && obj.text || null;
+        this.thread = obj && obj.thread || null;
+    }
+    return TMessage;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/model/t-thread.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TThread; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_uuid__ = __webpack_require__("./src/app/tester/rxjs/util/uuid.ts");
+
+var TThread = /** @class */ (function () {
+    function TThread(id, name, avatarSrc) {
+        this.id = id || Object(__WEBPACK_IMPORTED_MODULE_0__util_uuid__["a" /* uuid */])();
+        this.name = name;
+        this.avatarSrc = avatarSrc;
+    }
+    return TThread;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/model/t-user.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TUser; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util_uuid__ = __webpack_require__("./src/app/tester/rxjs/util/uuid.ts");
+
+var TUser = /** @class */ (function () {
+    function TUser(name, avatarSrc) {
+        this.name = name;
+        this.avatarSrc = avatarSrc;
+        this.id = Object(__WEBPACK_IMPORTED_MODULE_0__util_uuid__["a" /* uuid */])();
+    }
+    return TUser;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/rxjs.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/rxjs.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <div class=\"container\" >\n      <p>\n        Current User : {{ currentUser | json }}\n      </p>\n      <p>\n        New Message : {{ newMessage?.text }}\n        By : {{ newMessage?.author.name }}\n      </p>\n      <p>\n        Total Counts : {{ currentMessages }}\n      </p>\n      <mat-list>\n        <mat-list-item *ngFor=\"let message of messages\">\n          Thread:   {{ message.thread?.name }} <br>\n          Text : {{ message?.text }}\n          SentAt: {{ message?.sentAt }}\n          Author: {{ message?.author.name }}\n        </mat-list-item>\n      </mat-list>\n    </div>\n  <div class=\"mt-5\" fxLayoutAlign=\"center\" fxLayout=\"column\">\n    <h2 class=\"mat-h2\">Set Current User</h2>\n    <button mat-button (click)=\"setCurrentUser('user1')\">current user : User1</button>\n    <button mat-button (click)=\"setCurrentUser('user2')\">current user : User2</button>\n  </div>\n  <div class=\"mt-5\" fxLayoutAlign=\"center\" fxLayout=\"column\">\n    <h2 class=\"mat-h2\">Make new Message</h2>\n    <button mat-button (click)=\"addMessage('hello')\">New Message : hello</button>\n    <button mat-button (click)=\"addMessage('bye!')\">New Message : bye!</button>\n  </div>\n</div>\n\n\n"
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/rxjs.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RxjsComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__serivce_t_user_service__ = __webpack_require__("./src/app/tester/rxjs/serivce/t-user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_t_user_model__ = __webpack_require__("./src/app/tester/rxjs/model/t-user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_t_message_model__ = __webpack_require__("./src/app/tester/rxjs/model/t-message.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__serivce_t_message_service__ = __webpack_require__("./src/app/tester/rxjs/serivce/t-message.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_t_thread_model__ = __webpack_require__("./src/app/tester/rxjs/model/t-thread.model.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var RxjsComponent = /** @class */ (function () {
+    function RxjsComponent(userService, messageService) {
+        var _this = this;
+        this.userService = userService;
+        this.messageService = messageService;
+        this.currentMessages = 0;
+        this.thread = new __WEBPACK_IMPORTED_MODULE_5__model_t_thread_model__["a" /* TThread */]('t1', 'Nate', '');
+        this.userSub = userService
+            .currentUser
+            .subscribe(function (user) {
+            console.log(user);
+            _this.currentUser = user;
+        });
+        this.newMessageSub = this.messageService.newMessage.subscribe(function (newMessage) {
+            console.log(newMessage);
+            _this.newMessage = newMessage;
+        });
+        this.messagesSub = this.messageService.messages.subscribe(function (messages) {
+            _this.currentMessages = messages.length;
+            _this.messages = messages;
+        });
+    }
+    RxjsComponent.prototype.ngOnInit = function () {
+    };
+    RxjsComponent.prototype.addMessage = function (text) {
+        var message = new __WEBPACK_IMPORTED_MODULE_3__model_t_message_model__["a" /* TMessage */]({
+            thread: this.thread,
+            text: text,
+            author: this.currentUser
+        });
+        this.messageService.addMessage(message);
+    };
+    RxjsComponent.prototype.setCurrentUser = function (name) {
+        this.userService.setCurrentUser(new __WEBPACK_IMPORTED_MODULE_2__model_t_user_model__["a" /* TUser */](name, 'null'));
+    };
+    RxjsComponent.prototype.ngOnDestroy = function () {
+        console.log('Destroy Current User Observable');
+        this.userSub.unsubscribe();
+        this.newMessageSub.unsubscribe();
+    };
+    RxjsComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-rxjs',
+            template: __webpack_require__("./src/app/tester/rxjs/rxjs.component.html"),
+            styles: [__webpack_require__("./src/app/tester/rxjs/rxjs.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__serivce_t_user_service__["a" /* TUserService */],
+            __WEBPACK_IMPORTED_MODULE_4__serivce_t_message_service__["a" /* TMessageService */]])
+    ], RxjsComponent);
+    return RxjsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/serivce/t-message.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TMessageService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__("./node_modules/rxjs/_esm5/Subject.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var initialMessages = [];
+var TMessageService = /** @class */ (function () {
+    function TMessageService() {
+        //새로운 Message를 한번만 배출하는 스트림
+        this.newMessage = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
+        this.updates = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
+        this.create = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
+        this.markTreadAsRead = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["b" /* Subject */]();
+        this.messages = this.updates
+            .scan(function (messages, operation) { return operation(messages); }, initialMessages)
+            .publishReplay(1)
+            .refCount();
+        this.create.map(function (message) {
+            return function (messages) { return messages.concat(message); };
+        })
+            .subscribe(this.updates);
+        this.newMessage.subscribe(this.create);
+        this.markTreadAsRead
+            .map(function (thread) {
+            return function (messages) {
+                return messages.map(function (message) {
+                    if (message.thread.id === thread.id) {
+                        message.isRead = true;
+                    }
+                    return message;
+                });
+            };
+        })
+            .subscribe(this.updates);
+    }
+    TMessageService.prototype.addMessage = function (message) {
+        this.newMessage.next(message);
+    };
+    //현재 USER이외의 모든 thread을 가져온다
+    TMessageService.prototype.messagesForThreadUser = function (thread, user) {
+        return this.newMessage
+            .filter(function (message) { return message.thread.id === thread.id && message.author.id !== user.id; });
+    };
+    TMessageService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], TMessageService);
+    return TMessageService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/serivce/t-user.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TUserService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__ = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var TUserService = /** @class */ (function () {
+    function TUserService() {
+        this.currentUser = new __WEBPACK_IMPORTED_MODULE_0_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+    }
+    TUserService.prototype.setCurrentUser = function (newUser) {
+        this.currentUser.next(newUser);
+    };
+    TUserService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["C" /* Injectable */])()
+    ], TUserService);
+    return TUserService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/rxjs/util/uuid.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = uuid;
+function uuid() {
+    var i, random;
+    var result = '';
+    for (i = 0; i < 32; i++) {
+        random = Math.random() * 16 | 0;
+        if (i === 8 || i === 12 || i === 16 || i === 20) {
+            result += '-';
+        }
+        result += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random))
+            .toString(16);
+    }
+    return result;
+}
+;
+
+
+/***/ }),
+
+/***/ "./src/app/tester/session/session.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/tester/session/session.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"container mat-typography mt-5\">\n  <div class=\"search\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <mat-form-field>\n      <input type=\"text\"\n             placeholder=\"Topic Name\"\n             #searchInput\n             (keydown.enter)=\"search(searchInput.value)\"\n             matInput>\n      <mat-hint>Find the topic you want and type enter</mat-hint>\n    </mat-form-field>\n\n    <button mat-button class=\"btn-block\">Search</button>\n  </div>\n\n  <div class=\"result\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <p>\n      <span *ngIf=\"createdSession\">Session contains: {{ createdSession | json }}</span>\n      <span *ngIf=\"!createdSession\">No created Session</span>\n    </p>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/tester/session/session.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SessionComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_topic_repository_service__ = __webpack_require__("./src/app/service/topic-repository.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_operators__ = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var SessionComponent = /** @class */ (function () {
+    function SessionComponent(topicRepository, http) {
+        this.topicRepository = topicRepository;
+        this.http = http;
+    }
+    SessionComponent.prototype.ngOnInit = function () {
+    };
+    SessionComponent.prototype.search = function (value) {
+        var _this = this;
+        this.topicRepository
+            .byTopicName(value)
+            .pipe(Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_operators__["tap"])(function (value) { console.log(value); _this.topics = value; }), Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_operators__["filter"])(function (value) { return value != null && value.length > 0; }), Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_operators__["switchMap"])(function (value) {
+            var firstTopic = value[0];
+            console.log(value);
+            var param = [
+                'id=' + firstTopic.id,
+                'topicName=' + firstTopic.name
+            ].join('&');
+            return _this.http.get('/rest/tester/session/create?request=recentTopic&' + param);
+        }))
+            .subscribe(function (session) {
+            console.log(session);
+            _this.http.get('/rest/tester/session?request=recentTopic')
+                .subscribe(function (data) { return _this.createdSession = data; });
+        });
+    };
+    SessionComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-session',
+            template: __webpack_require__("./src/app/tester/session/session.component.html"),
+            styles: [__webpack_require__("./src/app/tester/session/session.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_topic_repository_service__["a" /* TopicRepository */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], SessionComponent);
+    return SessionComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/tester/tester.component.css":
 /***/ (function(module, exports) {
 
@@ -2443,7 +2857,7 @@ module.exports = ""
 /***/ "./src/app/tester/tester.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar>\r\n  <mat-nav-list>\r\n    <a mat-button routerLink=\"/tester/reddit\" >Reddit</a>\r\n    <a mat-button routerLink=\"/tester/inventory\" >Inventory</a>\r\n    <a mat-button routerLink=\"/tester/form\" >Form</a>\r\n    <a mat-button routerLink=\"/tester/youtube\" >Youtube</a>\r\n    <a mat-button routerLink=\"/tester/route\" >Route</a>\r\n  </mat-nav-list>\r\n</mat-toolbar>\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<mat-toolbar>\r\n  <mat-nav-list>\r\n    <a mat-button routerLink=\"/tester/reddit\" >Reddit</a>\r\n    <a mat-button routerLink=\"/tester/inventory\" >Inventory</a>\r\n    <a mat-button routerLink=\"/tester/form\" >Form</a>\r\n    <a mat-button routerLink=\"/tester/youtube\" >Youtube</a>\r\n    <a mat-button routerLink=\"/tester/route\" >Route</a>\r\n    <a mat-button routerLink=\"/tester/rxjs\" >Rxjs</a>\r\n    <a mat-button routerLink=\"/tester/session\" >Session</a>\r\n    <a mat-button routerLink=\"/tester/upload\" >Upload</a>\r\n  </mat-nav-list>\r\n</mat-toolbar>\r\n<router-outlet></router-outlet>\r\n"
 
 /***/ }),
 
@@ -2512,12 +2926,22 @@ var TesterComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__route_simple_login_simple_login_component__ = __webpack_require__("./src/app/tester/route/simple-login/simple-login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__route_protected_protected_component__ = __webpack_require__("./src/app/tester/route/protected/protected.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__route_log_in_guard__ = __webpack_require__("./src/app/tester/route/log-in.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__rxjs_rxjs_component__ = __webpack_require__("./src/app/tester/rxjs/rxjs.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__rxjs_serivce_t_user_service__ = __webpack_require__("./src/app/tester/rxjs/serivce/t-user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__rxjs_serivce_t_message_service__ = __webpack_require__("./src/app/tester/rxjs/serivce/t-message.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__session_session_component__ = __webpack_require__("./src/app/tester/session/session.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__upload_upload_component__ = __webpack_require__("./src/app/tester/upload/upload.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
+
 
 
 
@@ -2556,6 +2980,9 @@ var routes = [
             { path: 'youtube', component: __WEBPACK_IMPORTED_MODULE_19__youtube_youtube_component__["a" /* YoutubeComponent */] },
             { path: 'route', component: __WEBPACK_IMPORTED_MODULE_23__route_route_component__["a" /* RouteComponent */] },
             { path: 'protected', component: __WEBPACK_IMPORTED_MODULE_26__route_protected_protected_component__["a" /* ProtectedComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_27__route_log_in_guard__["a" /* LogInGuard */]] },
+            { path: 'rxjs', component: __WEBPACK_IMPORTED_MODULE_28__rxjs_rxjs_component__["a" /* RxjsComponent */] },
+            { path: 'session', component: __WEBPACK_IMPORTED_MODULE_31__session_session_component__["a" /* SessionComponent */] },
+            { path: 'upload', component: __WEBPACK_IMPORTED_MODULE_32__upload_upload_component__["a" /* UploadComponent */] },
         ]
     },
 ];
@@ -2569,6 +2996,8 @@ var TesterModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_21__youtube_youtube_search_service__["b" /* YoutubeSearchService */],
                 __WEBPACK_IMPORTED_MODULE_24__route_auth_manager_service__["a" /* AuthManager */],
                 __WEBPACK_IMPORTED_MODULE_27__route_log_in_guard__["a" /* LogInGuard */],
+                __WEBPACK_IMPORTED_MODULE_29__rxjs_serivce_t_user_service__["a" /* TUserService */],
+                __WEBPACK_IMPORTED_MODULE_30__rxjs_serivce_t_message_service__["a" /* TMessageService */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
@@ -2598,6 +3027,9 @@ var TesterModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_23__route_route_component__["a" /* RouteComponent */],
                 __WEBPACK_IMPORTED_MODULE_25__route_simple_login_simple_login_component__["a" /* SimpleLoginComponent */],
                 __WEBPACK_IMPORTED_MODULE_26__route_protected_protected_component__["a" /* ProtectedComponent */],
+                __WEBPACK_IMPORTED_MODULE_28__rxjs_rxjs_component__["a" /* RxjsComponent */],
+                __WEBPACK_IMPORTED_MODULE_31__session_session_component__["a" /* SessionComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__upload_upload_component__["a" /* UploadComponent */],
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_4__angular_router__["d" /* RouterModule */]
@@ -3146,6 +3578,87 @@ var RedditComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], RedditComponent);
     return RedditComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/tester/upload/upload.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/tester/upload/upload.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container mt-3\">\r\n  <form [formGroup]=\"form\"\r\n        (ngSubmit)=\"submitForm()\"\r\n        fxLayout=\"column\"\r\n        fxLayoutAlign=\"center center\">\r\n    <mat-form-field style=\"width: 200px\">\r\n      <input matInput formControlName=\"name\">\r\n      <mat-hint>Enter your name</mat-hint>\r\n    </mat-form-field>\r\n    <div class=\"form-control mt-2\" style=\"width: 200px\">\r\n      <input type=\"file\" (change)=\"onFileChange($event)\" #fileInput>\r\n    </div>\r\n    <div class=\"btn-groups mt-2\">\r\n      <button type=\"submit\"\r\n              mat-raised-button\r\n              class=\"btn-block\">Submit</button>\r\n    </div>\r\n  </form>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/tester/upload/upload.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var UploadComponent = /** @class */ (function () {
+    function UploadComponent(fb, http) {
+        this.fb = fb;
+        this.http = http;
+        this.createForm();
+        console.log(this.form);
+    }
+    UploadComponent.prototype.createForm = function () {
+        this.form = this.fb.group({
+            name: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["k" /* Validators */].required],
+            file: null
+        });
+    };
+    UploadComponent.prototype.onFileChange = function ($event) {
+        if ($event.target.value.length > 0) {
+            var file = $event.target.files[0];
+            this.form.get('file').setValue(file);
+        }
+    };
+    UploadComponent.prototype.createFormModel = function () {
+        var formData = new FormData();
+        formData.append('name', this.form.get('name').value);
+        formData.append('file', this.form.get('file').value);
+        console.log(formData);
+        return formData;
+    };
+    UploadComponent.prototype.submitForm = function () {
+        var formModel = this.createFormModel();
+        this.http.post('/rest/tester/upload/profile', formModel)
+            .subscribe(function () { });
+    };
+    UploadComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-upload',
+            template: __webpack_require__("./src/app/tester/upload/upload.component.html"),
+            styles: [__webpack_require__("./src/app/tester/upload/upload.component.css")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], UploadComponent);
+    return UploadComponent;
 }());
 
 
@@ -3702,6 +4215,7 @@ var TopicParagraphComponent = /** @class */ (function () {
             var _topic = _a[0], _paragraphs = _a[1];
             _this.topic = _topic;
             _this.paragraphs = _paragraphs;
+            _this.topicRepository.putClickedTopic(_this.topic.name);
         });
     }
     TopicParagraphComponent.prototype.ngOnInit = function () {

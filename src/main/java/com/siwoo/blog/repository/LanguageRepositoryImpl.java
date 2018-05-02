@@ -24,9 +24,9 @@ public class LanguageRepositoryImpl implements CustomLanguageRepository {
 
     @Autowired
     EntityManager entityManager;
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_DESCRIPTION = "description";
-    private static final String COLUMN_TYPE = "type";
+    static final String COLUMN_NAME = "name";
+    static final String COLUMN_DESCRIPTION = "description";
+    static final String COLUMN_TYPE = "type";
 
     @Override
     public List<Language> searchAny(LanguageSpecification specification) {

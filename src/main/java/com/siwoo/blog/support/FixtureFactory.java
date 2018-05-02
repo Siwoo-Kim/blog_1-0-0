@@ -172,9 +172,9 @@ public class FixtureFactory {
 
         Paragraph child = new Paragraph();
         child.setTitle("제약 어노테이션의 속성");
-        child.setDescription("message - 제약 위반을 표시되는 오류 메시지를 지정\n" +
+        child.setDescription("messages - 제약 위반을 표시되는 오류 메시지를 지정\n" +
                 "\tgroups - 유효성 그룹을 지정한다. 기본값은 Default이다\n groups 속성값을 이용하면 입력값 검사 규칙을 교체할 수 있다.");
-        child.setCode("\n" + "interface PostForm extends Default {}  \n" + "//Default를 상속하면 그룹을 지정하지 않은 검사 규측을 검사 대상에 포함한다.\n" + "interface UpdateForm extends Default {}\n" + "\n" + "\n" + "@NotNull(message = ERROR_NOTNULL, groups = PostForm.class)\n" + "@Null(groups = UpdateForm.class)\n" + "@Enumerated(EnumType.STRING)\n" + "private CategoryType type;\n" + "\n" + "@PostMapping\n" + "HttpEntity<?> save(@Validated(UpdateForm.class) @RequestBody Category category, BindingResult result) {\n" + "   log.error(result.hasErrors() + \"\");\n" + "   result.getFieldErrors().stream().map(FieldError::getField).forEach(log::warn);\n" + "   System.out.println(category);\n" + "\n" + "   return new HttpEntity<>(category);\n" + "}\n");
+        child.setCode("\n" + "interface PostForm extends Default {}  \n" + "//Default를 상속하면 그룹을 지정하지 않은 검사 규측을 검사 대상에 포함한다.\n" + "interface UpdateForm extends Default {}\n" + "\n" + "\n" + "@NotNull(messages = ERROR_NOTNULL, groups = PostForm.class)\n" + "@Null(groups = UpdateForm.class)\n" + "@Enumerated(EnumType.STRING)\n" + "private CategoryType type;\n" + "\n" + "@PostMapping\n" + "HttpEntity<?> save(@Validated(UpdateForm.class) @RequestBody Category category, BindingResult result) {\n" + "   log.error(result.hasErrors() + \"\");\n" + "   result.getFieldErrors().stream().map(FieldError::getField).forEach(log::warn);\n" + "   System.out.println(category);\n" + "\n" + "   return new HttpEntity<>(category);\n" + "}\n");
         child.setTopic(topic);
         parent.addChild(child);
 
@@ -215,7 +215,7 @@ public class FixtureFactory {
         List paragraphs = new ArrayList();
         Paragraph parent = new Paragraph();
         parent.setTitle("Displaying Data");
-        parent.setDescription("You can display data by binding controls in an HTML template to properties of an Angular component.\n" + "\n" + "In this page, you'll create a component with a list of heroes. You'll display the list of hero names and conditionally show a message below the list.\n" + "\n" + "The final UI looks like this");
+        parent.setDescription("You can display data by binding controls in an HTML template to properties of an Angular component.\n" + "\n" + "In this page, you'll create a component with a list of heroes. You'll display the list of hero names and conditionally show a messages below the list.\n" + "\n" + "The final UI looks like this");
         parent.setCode("import { Component } from '@angular/core';\n" + "\n" + "@Component({\n" + "  selector: 'app-root',\n" + "  template: `\n" + "    <h1>{{title}}</h1>\n" + "    <h2>My favorite hero is: {{myHero}}</h2>\n" + "    `\n" + "})\n" + "export class AppComponent {\n" + "  title = 'Tour of Heroes';\n" + "  myHero = 'Windstorm';\n" + "}");
         parent.setTopic(topic);
         paragraphs.add(parent);

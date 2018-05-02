@@ -19,9 +19,8 @@ public class LanguageController {
     @Autowired
     LanguageRepository languageRepository;
 
-    @GetMapping(params = "by=specification")
+    @GetMapping(params = {"by=specification","request=all_any"})
     public List<Language> searchAny(@RequestParam String value) {
-        System.out.println(value);
         return languageRepository
                 .searchAny(new LanguageSpecification(value,new HashSet<>(Arrays.asList(ALL))));
     }
